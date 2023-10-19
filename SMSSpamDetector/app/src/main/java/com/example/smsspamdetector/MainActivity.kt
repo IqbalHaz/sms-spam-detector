@@ -7,11 +7,14 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.smsspamdetector.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var smsListAdapter: SMSListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,5 +31,14 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        smsListAdapter = SMSListAdapter(mutableListOf(
+            SMSInfo("62123123","23 Oct","Hello world"),
+            SMSInfo("62123123","24 Oct","Hello world")
+        ))
+
+        val rvAdapter = findViewById<RecyclerView>(R.id.listSMS)
+        rvAdapter.adapter = smsListAdapter
+        rvAdapter.layoutManager = LinearLayoutManager(this)
     }
 }
